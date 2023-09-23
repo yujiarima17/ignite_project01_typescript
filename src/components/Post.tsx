@@ -17,20 +17,24 @@ interface Content {
   type: "paragraph" | "link";
   content: string;
 }
-interface PostProps {
+export interface PostType {
+  id: number;
   author: Author;
   publishedAt: Date;
-  context: Content[];
+  content: Content[];
 }
-export function Post({ author, publishedAt, postContent }: PostProps) {
+interface PostProps {
+  post: PostType;
+}
+export function Post({ post }: PostProps) {
   const [comments, setComments] = useState(["Post bacana !Hein"]);
   const [newCommentText, setNewCommentText] = useState("");
   const publishedDateFormated = format(
-    publishedAt,
+    post.publishedAt,
     "d 'de' LLLL 'às' HH:mm'h'",
     { locale: ptBR }
   );
-  const publishedDateRelativeToNow = formatDistanceToNow(publishedAt, {
+  const publishedDateRelativeToNow = formatDistanceToNow(post.publishedAt, {
     locale: ptBR,
     addSuffix: true,
   });
@@ -62,22 +66,22 @@ export function Post({ author, publishedAt, postContent }: PostProps) {
       <header>
         <div className={styles.author}>
           {/* quando omitimos um valor bool de uma prop React, é sinalizado que será true  */}
-          <Avatar hasBorder src={author.avatarUrl} alt="foto de perfil"/>
+          <Avatar hasBorder src={post.author.avatarUrl} alt="foto de perfil" />
           <div className={styles.authorInfo}>
-            <strong>{author.name}</strong>
-            <span>{author.role}</span>
+            <strong>{post.author.name}</strong>
+            <span>{post.author.role}</span>
           </div>
         </div>
 
         <time
           title={publishedDateFormated}
-          dateTime={publishedAt.toISOString()}
+          dateTime={post.publishedAt.toISOString()}
         >
           {publishedDateRelativeToNow}
         </time>
       </header>
       <div className={styles.content}>
-        {postContent.map((contentItem) => {
+        {post.content.map((contentItem) => {
           if (contentItem.type === "paragraph") {
             return <p key={contentItem.content}>{contentItem.content}</p>;
           } else if (contentItem.type === "link") {

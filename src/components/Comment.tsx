@@ -5,9 +5,9 @@ import { useState } from "react";
 
 interface CommentProps {
   content: string;
-  onDeleteComent: (comment: string) => void;
+  onDeleteComment: (comment: string) => void;
 }
-export function Comment({ content, onDeleteComment }) {
+export function Comment({ content, onDeleteComment }: CommentProps) {
   function handleDeleteComment() {
     onDeleteComment(content);
   }

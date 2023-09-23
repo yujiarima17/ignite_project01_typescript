@@ -2,13 +2,14 @@ import { Post } from "./components/Post";
 import { Header } from "./components/Header";
 import "./global.css";
 import styles from "./App.module.css";
+import { PostType } from "./components/Post";
 import { Sidebar } from "./components/Sidebar";
 // author : {avatar_url : "", name: "", role: ""}
 // publishedAt : Date
 // content : String
 
 // simulando retorno do back-end
-const posts = [
+const posts: PostType[] = [
   {
     id: 1,
     author: {
@@ -67,12 +68,7 @@ function App() {
           {posts.map((post) => {
             return (
               // propriedade key - identificacao de childs dentro de uma array
-              <Post
-                key={post.id}
-                author={post.author}
-                postContent={post.content}
-                publishedAt={post.publishedAt}
-              />
+              <Post key={post.id} post={post} />
             );
           })}
         </main>
